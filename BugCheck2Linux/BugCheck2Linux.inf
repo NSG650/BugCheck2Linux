@@ -1,0 +1,77 @@
+;
+; BugCheck2Linux.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System ; TODO: specify appropriate Class
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=BugCheck2Linux.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+BugCheck2Linux_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+BugCheck2Linux.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%BugCheck2Linux.DeviceDesc%=BugCheck2Linux_Device, Root\BugCheck2Linux ; TODO: edit hw-id
+
+[BugCheck2Linux_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+BugCheck2Linux.sys
+
+;-------------- Service installation
+[BugCheck2Linux_Device.NT.Services]
+AddService = BugCheck2Linux,%SPSVCINST_ASSOCSERVICE%, BugCheck2Linux_Service_Inst
+
+; -------------- BugCheck2Linux driver install sections
+[BugCheck2Linux_Service_Inst]
+DisplayName    = %BugCheck2Linux.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\BugCheck2Linux.sys
+
+;
+;--- BugCheck2Linux_Device Coinstaller installation ------
+;
+
+[BugCheck2Linux_Device.NT.CoInstallers]
+AddReg=BugCheck2Linux_Device_CoInstaller_AddReg
+CopyFiles=BugCheck2Linux_Device_CoInstaller_CopyFiles
+
+[BugCheck2Linux_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[BugCheck2Linux_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[BugCheck2Linux_Device.NT.Wdf]
+KmdfService =  BugCheck2Linux, BugCheck2Linux_wdfsect
+[BugCheck2Linux_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "BugCheck2Linux Installation Disk"
+BugCheck2Linux.DeviceDesc = "BugCheck2Linux Device"
+BugCheck2Linux.SVCDESC = "BugCheck2Linux Service"
