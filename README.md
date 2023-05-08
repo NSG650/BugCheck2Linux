@@ -44,7 +44,7 @@ For the video output we use bootvid.dll and for input we have a ~~horrible~~ sim
 * Runs at 640x480 with 16 colors.
 * Only works on BIOS systems.
 * Is really slow at times.
-* Keyboard support is poor. You will have to use CapsLock instead of Shift if you want to access special letters or capital letters.
+* Keyboard support is poor. You will have to use CapsLock instead of Shift if you want to access special letters or capital letters. Oh also Backspace does not work.
 
 # Credits
 
