@@ -50,6 +50,6 @@ For the video output we use bootvid.dll and for input we have a ~~horrible~~ sim
 
 [mini-rv32ima](https://github.com/cnlohr/mini-rv32ima) for the RISC V emulator and the Linux image.
 
-[ReactOS Project](doxygen.reactos.org/) for providing documentations for bootvid
+[ReactOS Project](https://doxygen.reactos.org/) for providing documentations for bootvid
 
 [OSdev Wiki](https://wiki.osdev.org/%228042%22_PS/2_Controller) for providing documentations for PS/2
